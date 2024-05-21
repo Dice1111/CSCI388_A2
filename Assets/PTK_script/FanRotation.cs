@@ -5,6 +5,8 @@ using UnityEngine;
 public class FanRotation : MonoBehaviour
 {
     [SerializeField] private GameObject fan;
+    public float maxRotationSpeed = 1000f;
+    public float minRotationSpeed = 0f;
     public float rotationSpeed = 100f;
     private bool isRotating = false;
 
