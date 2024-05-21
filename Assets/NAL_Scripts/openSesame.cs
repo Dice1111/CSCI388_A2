@@ -11,14 +11,16 @@ public class openSesame : MonoBehaviour
     {
         if (doorOpen == false)
         {
-            bathroom_door.transform.rotation = Quaternion.Euler(0, -180, 0);
+            bathroom_door.transform.rotation = Quaternion.Euler(0, 360, 0);
             doorOpen = true;
+            Debug.Log("yes");
         }
         else if (doorOpen == true)
         {
-            bathroom_door.transform.rotation = Quaternion.Euler(0, -90, 0);
+            bathroom_door.transform.rotation = Quaternion.Euler(0, 90, 0);
             doorOpen = false;
+            Debug.Log("no");
         }
-        
+
     }
 }
