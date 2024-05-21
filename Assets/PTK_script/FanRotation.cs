@@ -8,10 +8,8 @@ public class FanRotation : MonoBehaviour
     public float maxRotationSpeed = 800f; // Maximum rotation speed
     public float accelerationRate = 100f; // Rate at which the fan speeds up
     public float decelerationRate = 100f; // Rate at which the fan slows down
-
     private bool isRotating = false;
     private float currentSpeed = 0f;
-
     void Update()
     {
         if (isRotating)
