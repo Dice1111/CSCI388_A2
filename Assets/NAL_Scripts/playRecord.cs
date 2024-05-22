@@ -7,9 +7,13 @@ public class playRecord : MonoBehaviour
 {
     [SerializeField] private GameObject handle;
     private XRSocketInteractor socketInteractor;
-    public float rotationSpeed = 90f;
+    public float rotationSpeed = 30f;
     public Vector3 rotationVector = new Vector3(0, 1, 0);
     private GameObject placedObject = null;
+
+    public float handleRotationSpeed = 70f;  //speed
+    public float handlemaxRotationAngle = 70f;
+    private float handleCurrentRotation = 0f; 
 
 
 
@@ -79,7 +83,15 @@ public class playRecord : MonoBehaviour
                 transform.Rotate(rotationVector * rotationSpeed * Time.deltaTime);
 
                 //rotate handle to 90* y-axis
-                handle.transform.Rotate(rotationVector * rotationSpeed * Time.deltaTime);
+                if (handleCurrentRotation < handlemaxRotationAngle)
+                {
+                    handleCurrentRotation += handleRotationSpeed * Time.deltaTime;
+                    handle.transform.Rotate(Vector3.up * handleRotationSpeed * Time.deltaTime);
+                   
+                }
+                   
+           
+               
             }
         }
 
