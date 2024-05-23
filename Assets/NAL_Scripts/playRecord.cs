@@ -8,11 +8,11 @@ public class playRecord : MonoBehaviour
     [SerializeField] private GameObject handle;
     private XRSocketInteractor socketInteractor;
     public float rotationSpeed = 30f;
-    public Vector3 rotationVector = new Vector3(0, 1, 0);
     private GameObject placedObject = null;
 
-    public float handleRotationSpeed = 70f;  //speed
+    public float handleRotationSpeed = 10f;
     public float handlemaxRotationAngle = 70f;
+    public float handleminRotationAngle = 0f;
     private float handleCurrentRotation = 0f; 
 
 
@@ -33,28 +33,12 @@ public class playRecord : MonoBehaviour
     // Add record
     private void OnSelectEntered(SelectEnterEventArgs args)
     {
-        Debug.Log("Object placed in socket");
-
-        placedObject = args.interactableObject.transform.gameObject;
-        if (placedObject != null)
-        {
-            AudioSource audioSource = placedObject.GetComponent<AudioSource>();
-            if (audioSource != null)
-            {
-                audioSource.Play();
-            }
-            else
-            {
-                Debug.LogWarning("No AudioSource found on placed object");
-            }
-        }
+        placedObject = args.interactableObject.transform.gameObject;       
     }
 
     // Remove record
     private void OnSelectExited(SelectExitEventArgs args)
     {
-        Debug.Log("Object removed from socket");
-
         if (placedObject != null)
         {
             AudioSource audioSource = placedObject.GetComponent<AudioSource>();
@@ -77,21 +61,29 @@ public class playRecord : MonoBehaviour
         if (placedObject != null)
         {
             AudioSource audioSource = placedObject.GetComponent<AudioSource>();
-            if (audioSource != null && audioSource.isPlaying)
-            {
-                
-                transform.Rotate(rotationVector * rotationSpeed * Time.deltaTime);
 
                 //rotate handle to 90* y-axis
-                if (handleCurrentRotation < handlemaxRotationAngle)
+            if (handleCurrentRotation < handlemaxRotationAngle)
+            {
+                 handleCurrentRotation += handleRotationSpeed * Time.deltaTime;
+                 handle.transform.Rotate(Vector3.up * handleRotationSpeed * Time.deltaTime);
+            }
+            else
+            {
+                transform.Rotate(Vector3.up * rotationSpeed * Time.deltaTime);
+                if (!audioSource.isPlaying)
                 {
-                    handleCurrentRotation += handleRotationSpeed * Time.deltaTime;
-                    handle.transform.Rotate(Vector3.up * handleRotationSpeed * Time.deltaTime);
-                   
+
+                    audioSource.Play();
                 }
-                   
-           
-               
+            }
+        }
+        else
+        {
+            if (handleCurrentRotation > handleminRotationAngle)
+            {
+                handleCurrentRotation -= handleRotationSpeed * Time.deltaTime;
+                handle.transform.Rotate(Vector3.up * -handleRotationSpeed * Time.deltaTime);
             }
         }
 
